@@ -26,22 +26,31 @@
         End Get
     End Property
 
-    Public ReadOnly Property AccessedOn() As DateTime
+    Public Property AccessedOn() As DateTime
         Get
             Return _accessedOn
         End Get
+        Protected Set(ByVal value As DateTime)
+            _accessedOn = value
+        End Set
     End Property
 
-    Public ReadOnly Property ModifiedOn() As DateTime
+    Public Property ModifiedOn() As DateTime
         Get
             Return _modifiedOn
         End Get
+        Protected Set(ByVal value As DateTime)
+            _modifiedOn = value
+        End Set
     End Property
 
-    Public ReadOnly Property CreatedOn() As DateTime
+    Public Property CreatedOn() As DateTime
         Get
-            Return _CreatedOn
+            Return _createdOn
         End Get
+        Protected Set(ByVal value As DateTime)
+            _createdOn = value
+        End Set
     End Property
 
     Public Property Name() As String
@@ -77,7 +86,7 @@
         stream.Read(buffer, 0, stream.Length)
 
         _bytes = buffer
-
+        
     End Sub
 
     Public Overridable Function Rename(ByVal newName As String) As Boolean

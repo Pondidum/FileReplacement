@@ -1,5 +1,4 @@
-﻿Public Class FileRepository
-
+﻿Public Class FileRepositoryImpl
 
     Public Function GetFileFromDisk(ByVal path As String) As FileDescriptor
 
@@ -16,6 +15,17 @@
         Catch ex As IO.IOException
             Return New Descriptors.VoidFile(path)
         End Try
+
+    End Function
+
+    Public Function GetFileFromDatabase(ByVal reader As IDataReader) As FileDescriptor
+
+        If reader Is Nothing Then
+            Return New Descriptors.VoidFile()
+        End If
+
+        'Return New Descriptors.DatabaseFile(reader)
+        Return New Descriptors.VoidFile()
 
     End Function
 

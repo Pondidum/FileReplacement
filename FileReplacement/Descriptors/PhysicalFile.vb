@@ -2,8 +2,13 @@
 
     Public Class PhysicalFile
         Inherits FileDescriptor
-        
+
         Private _path As String
+
+        Public Sub New(ByVal path As String)
+            MyBase.New()
+            FromFile(path)
+        End Sub
 
         Public ReadOnly Property Directory() As String
             Get
@@ -11,12 +16,30 @@
             End Get
         End Property
 
-
         Public Overrides ReadOnly Property Type As FileDescriptor.FileTypes
             Get
                 Return FileTypes.Physical
             End Get
         End Property
+
+        Protected Sub FromFile(ByVal path As String)
+
+            Dim fi = New IO.FileInfo(path)
+
+            MyBase.Name = fi.Name
+            _path = fi.DirectoryName
+
+            MyBase.CreatedOn = fi.CreationTime
+            MyBase.ModifiedOn = fi.LastWriteTime
+            MyBase.AccessedOn = fi.LastAccessTime
+
+            Using fs = fi.OpenRead()
+                MyBase.ReadFrom(fs)
+            End Using
+
+            fi = Nothing
+
+        End Sub
 
         Public Overrides Function Rename(ByVal newName As String) As Boolean
 
