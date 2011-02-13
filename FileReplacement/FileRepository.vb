@@ -1,6 +1,6 @@
 ﻿'monostate pattern
 
-Public Class FileRepository2
+Public Class FileRepository
 
     Private Shared _repository As FileRepositoryImpl
 
