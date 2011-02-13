@@ -73,6 +73,7 @@
     <Compile Include="Descriptors\VoidFile.vb" />
     <Compile Include="FileDescriptor.vb" />
     <Compile Include="FileRepository.vb" />
+    <Compile Include="FileRepositoryImpl.vb" />
     <Compile Include="IFileDescriptorData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
