@@ -1,4 +1,4 @@
-﻿Public Class PhysicalFallback
+﻿Friend Class PhysicalFallback
 
     Private ReadOnly _paths As List(Of String)
 
@@ -27,7 +27,9 @@
             Return String.Empty
         End If
 
-        Dim index = _paths.First(Function(p) String.Equals(p, directory, StringComparison.OrdinalIgnoreCase))
+        'these next two lines are not ideal, it really should use the IO.Path to make comparisons i think
+        Dim item = _paths.First(Function(p) String.Equals(p, directory, StringComparison.OrdinalIgnoreCase))
+        Dim index = _paths.IndexOf(item)        'yuck
 
         If index <= -1 Then
             Return String.Empty

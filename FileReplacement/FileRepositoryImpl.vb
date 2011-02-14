@@ -1,11 +1,13 @@
-﻿Public Class FileRepositoryImpl
+﻿Friend Class FileRepositoryImpl
 
     Private ReadOnly _physicalFallbacks As PhysicalFallback
 
     Public Sub New()
-
         _physicalFallbacks = New PhysicalFallback()
+    End Sub
 
+    Public Sub AddPhysicalFallbacks(ByVal ParamArray paths() As String)
+        _physicalFallbacks.AddRange(paths)
     End Sub
 
     Public Function GetFileFromDisk(ByVal path As String) As FileDescriptor
@@ -14,7 +16,11 @@
             Return New Descriptors.VoidFile()
         End If
 
-        path = _physicalFallbacks.GetBestPath(path)
+        If IO.File.Exists(path) Then
+            Return New Descriptors.PhysicalFile(path)
+        End If
+
+        path = _physicalFallbacks.GetBestPath(path)  'this will need to be looped to try paths in succession.
 
         If Not IO.File.Exists(path) Then
             Return New Descriptors.VoidFile(path)
