@@ -1,10 +1,20 @@
 ﻿Public Class FileRepositoryImpl
 
+    Private ReadOnly _physicalFallbacks As PhysicalFallback
+
+    Public Sub New()
+
+        _physicalFallbacks = New PhysicalFallback()
+
+    End Sub
+
     Public Function GetFileFromDisk(ByVal path As String) As FileDescriptor
 
         If String.IsNullOrWhiteSpace(path) Then
             Return New Descriptors.VoidFile()
         End If
+
+        path = _physicalFallbacks.GetBestPath(path)
 
         If Not IO.File.Exists(path) Then
             Return New Descriptors.VoidFile(path)
