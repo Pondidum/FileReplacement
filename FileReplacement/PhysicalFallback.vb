@@ -27,8 +27,7 @@
             Return String.Empty
         End If
 
-        'these next two lines are not ideal, it really should use the IO.Path to make comparisons i think
-        Dim item = _paths.First(Function(p) String.Equals(p, directory, StringComparison.OrdinalIgnoreCase))
+        Dim item = _paths.First(Function(p) ComparePaths(p, directory))
         Dim index = _paths.IndexOf(item)        'yuck
 
         If index <= -1 Then
@@ -42,6 +41,14 @@
         End If
 
         Return IO.Path.Combine(_paths(index), filename)
+
+    End Function
+
+    Private Function ComparePaths(ByVal first As String, ByVal second As String) As Boolean
+
+        Return String.Equals(IO.Path.GetFullPath(first).TrimEnd("\\"),
+                             IO.Path.GetFullPath(second).TrimEnd("\\"),
+                             StringComparison.OrdinalIgnoreCase)
 
     End Function
 
