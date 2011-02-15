@@ -8,11 +8,19 @@ Module Module1
                                             "c:\else")
 
 
+        If IO.File.Exists("c:\test\sub\test.txt") Then
+            IO.File.Delete("c:\test\sub\test.txt")
+        End If
+
+        If IO.File.Exists("c:\else\test.txt") Then
+            IO.File.Delete("c:\else\test.txt")
+        End If
+
         IO.Directory.CreateDirectory("C:\else")
 
         'void type
         Dim file = FileRepository.GetFileFromDisk("c:\test\sub\test.txt")
-        Console.WriteLine(file.Type)
+        Console.WriteLine("{0} : {1}", CStr(file.Type), IO.Path.Combine(file.Directory, file.Name))
 
 
 
@@ -23,7 +31,7 @@ Module Module1
 
         'physical, from backup location
         file = FileRepository.GetFileFromDisk("c:\test\sub\test.txt")
-        Console.WriteLine(file.Type)
+        Console.WriteLine("{0} : {1}", CStr(file.Type), IO.Path.Combine(file.Directory, file.Name))
 
 
 
@@ -34,7 +42,7 @@ Module Module1
 
         'physical, from correct location
         file = FileRepository.GetFileFromDisk("c:\test\sub\test.txt")
-        Console.WriteLine(file.Type)
+        Console.WriteLine("{0} : {1}", CStr(file.Type), IO.Path.Combine(file.Directory, file.Name))
 
         Console.ReadKey()
 

@@ -12,25 +12,24 @@
 
     Public Function GetFileFromDisk(ByVal path As String) As FileDescriptor
 
-        If String.IsNullOrWhiteSpace(path) Then
-            Return New Descriptors.VoidFile()
-        End If
+        While Not String.IsNullOrWhiteSpace(path)
 
-        If IO.File.Exists(path) Then
-            Return New Descriptors.PhysicalFile(path)
-        End If
+            If IO.File.Exists(path) Then
 
-        path = _physicalFallbacks.GetBestPath(path)  'this will need to be looped to try paths in succession.
+                Try
+                    Return New Descriptors.PhysicalFile(path)
+                Catch ex As IO.IOException
+                    Return New Descriptors.VoidFile(path)
+                End Try
 
-        If Not IO.File.Exists(path) Then
-            Return New Descriptors.VoidFile(path)
-        End If
+            End If
 
-        Try
-            Return New Descriptors.PhysicalFile(path)
-        Catch ex As IO.IOException
-            Return New Descriptors.VoidFile(path)
-        End Try
+            path = _physicalFallbacks.GetBestPath(path)
+
+        End While
+
+        Return New Descriptors.VoidFile(path)
+
 
     End Function
 

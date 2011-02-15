@@ -2,20 +2,12 @@
 
     Public Class PhysicalFile
         Inherits FileDescriptor
-
-        Private _path As String
-
+        
         Public Sub New(ByVal path As String)
             MyBase.New()
             FromFile(path)
         End Sub
-
-        Public ReadOnly Property Directory() As String
-            Get
-                Return _path
-            End Get
-        End Property
-
+        
         Public Overrides ReadOnly Property Type As FileDescriptor.FileTypes
             Get
                 Return FileTypes.Physical
@@ -27,7 +19,7 @@
             Dim fi = New IO.FileInfo(path)
 
             MyBase.Name = fi.Name
-            _path = fi.DirectoryName
+            MyBase.Directory = fi.DirectoryName
 
             MyBase.CreatedOn = fi.CreationTime
             MyBase.ModifiedOn = fi.LastWriteTime
@@ -45,8 +37,8 @@
 
             If String.IsNullOrWhiteSpace(newName) Then Return False
 
-            Dim source = IO.Path.Combine(_path, Me.Name)
-            Dim dest = IO.Path.Combine(_path, newName)
+            Dim source = IO.Path.Combine(MyBase.Directory, Me.Name)
+            Dim dest = IO.Path.Combine(MyBase.Directory, newName)
 
             IO.File.Move(source, dest)
             Me.Name = newName
@@ -59,12 +51,12 @@
 
             If String.IsNullOrWhiteSpace(newPath) Then Return False
 
-            Dim source = IO.Path.Combine(_path, Me.Name)
+            Dim source = IO.Path.Combine(MyBase.Directory, Me.Name)
 
             IO.File.Move(source, newPath)
 
             Me.Name = IO.Path.GetFileName(newPath)
-            _path = IO.Path.GetDirectoryName(newPath)
+            MyBase.Directory = IO.Path.GetDirectoryName(newPath)
 
             Return True
 

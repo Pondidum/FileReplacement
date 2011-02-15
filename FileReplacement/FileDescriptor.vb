@@ -1,13 +1,15 @@
 ﻿Public MustInherit Class FileDescriptor
     
     Private _name As String
+    Private _directory As String
     Private _createdOn As DateTime
     Private _modifiedOn As DateTime
     Private _accessedOn As DateTime
     Private _bytes() As Byte
-
+    
     Public Sub New()
         _name = String.Empty
+        _directory = String.Empty
         _createdOn = DateTime.MinValue
         _modifiedOn = DateTime.MinValue
         _accessedOn = DateTime.MinValue
@@ -50,6 +52,15 @@
         End Get
         Protected Set(ByVal value As DateTime)
             _createdOn = value
+        End Set
+    End Property
+
+    Public Property Directory() As String
+        Get
+            Return _directory
+        End Get
+        Protected Set(ByVal value As String)
+            _directory = value
         End Set
     End Property
 
