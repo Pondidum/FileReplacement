@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PhysicalFile\PhysicalFile.vb" />
-    <Compile Include="Descriptors\VoidFile.vb" />
+    <Compile Include="VoidFile.vb" />
     <Compile Include="FileDescriptor.vb" />
     <Compile Include="FileRepository.vb" />
     <Compile Include="FileRepositoryImpl.vb" />
@@ -91,6 +91,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PhysicalFile\PhysicalFallback.vb" />
+    <Compile Include="PhysicalFile\PhysicalRepository.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

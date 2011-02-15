@@ -1,48 +1,36 @@
-﻿Imports FileReplacement.PhysicalFile
-
+﻿
 Friend Class FileRepositoryImpl
 
-    Private ReadOnly _physicalFallbacks As PhysicalFallback
+    Private ReadOnly _physicalRepository As PhysicalFile.PhysicalRepository
 
     Public Sub New()
-        _physicalFallbacks = New PhysicalFallback()
+        _physicalRepository = New PhysicalFile.PhysicalRepository()
     End Sub
 
+
+    '
+    ' Physical redirects
+    '
     Public Sub AddPhysicalFallbacks(ByVal ParamArray paths() As String)
-        _physicalFallbacks.AddRange(paths)
+        _physicalRepository.AddPhysicalFallbacks(paths)
     End Sub
 
     Public Function GetFileFromDisk(ByVal path As String) As FileDescriptor
-
-        While Not String.IsNullOrWhiteSpace(path)
-
-            If IO.File.Exists(path) Then
-
-                Try
-                    Return New PhysicalFile.PhysicalFile(path)
-                Catch ex As IO.IOException
-                    Return New Descriptors.VoidFile(path)
-                End Try
-
-            End If
-
-            path = _physicalFallbacks.GetBestPath(path)
-
-        End While
-
-        Return New Descriptors.VoidFile(path)
-
-
+        Return _physicalRepository.GetFileFromDisk(path)
     End Function
 
+
+    '
+    ' Database redirects
+    '
     Public Function GetFileFromDatabase(ByVal reader As IDataReader) As FileDescriptor
 
         If reader Is Nothing Then
-            Return New Descriptors.VoidFile()
+            Return New VoidFile()
         End If
 
         'Return New Descriptors.DatabaseFile(reader)
-        Return New Descriptors.VoidFile()
+        Return New VoidFile()
 
     End Function
 
