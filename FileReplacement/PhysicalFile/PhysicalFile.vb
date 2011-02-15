@@ -1,13 +1,13 @@
-﻿Namespace Descriptors
+﻿Namespace PhysicalFile
 
     Public Class PhysicalFile
         Inherits FileDescriptor
-        
+
         Public Sub New(ByVal path As String)
             MyBase.New()
             FromFile(path)
         End Sub
-        
+
         Public Overrides ReadOnly Property Type As FileDescriptor.FileTypes
             Get
                 Return FileTypes.Physical

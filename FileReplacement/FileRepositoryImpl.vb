@@ -1,4 +1,6 @@
-﻿Friend Class FileRepositoryImpl
+﻿Imports FileReplacement.PhysicalFile
+
+Friend Class FileRepositoryImpl
 
     Private ReadOnly _physicalFallbacks As PhysicalFallback
 
@@ -17,7 +19,7 @@
             If IO.File.Exists(path) Then
 
                 Try
-                    Return New Descriptors.PhysicalFile(path)
+                    Return New PhysicalFile.PhysicalFile(path)
                 Catch ex As IO.IOException
                     Return New Descriptors.VoidFile(path)
                 End Try
